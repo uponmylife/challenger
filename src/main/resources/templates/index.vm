@@ -1,0 +1,42 @@
+#parse("header.vm")
+
+#foreach($cell in $cells)
+<div style="display: inline-block; width: 13%; border: 1px solid">
+    #set($dateFormat="d")
+    #if($foreach.index%7 == 0) #set($dateFormat="M / d")
+    #end
+    <div>$datetool.format($dateFormat, $cell.date)</div>
+    #foreach($slot in $cell.slots)
+        #set($i=$foreach.index)
+        <div id="${cell.day}_$i" onclick="toggle('${cell.day}', '$i')"
+             class="text-right #if($slot) slot_color_$i #end"
+             style="height: 30px"></div>
+    #end
+</div>
+#end
+
+<script type="text/javascript">
+window.onload=function(){
+    $('.slot_color_0').css('background-color', getSlotColor(0));
+    $('.slot_color_1').css('background-color', getSlotColor(1));
+    $('.slot_color_2').css('background-color', getSlotColor(2));
+}
+
+function toggle(day, slotNum) {
+    $.post('/toggle/' + day + '/' + slotNum, function(result) {
+        var slotColor = 'white';
+        if (result == true) slotColor = getSlotColor(slotNum);
+        $('#' + day + '_' + slotNum).css('background-color', slotColor);
+    });
+
+}
+
+function getSlotColor(slotNum) {
+    if (slotNum == 0) return 'LemonChiffon';
+    if (slotNum == 1) return 'PowderBlue';
+    if (slotNum == 2) return 'PaleGreen';
+}
+</script>
+
+#parse("footer.vm")
+
