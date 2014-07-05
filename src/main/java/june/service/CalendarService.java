@@ -14,7 +14,7 @@ public class CalendarService {
     @Autowired
     private RecordRepository recordRepository;
 
-    public List<Cell> show(int weekAgo) {
+    public List<Cell> show(Long subjectId, int weekAgo) {
         DateScope dateScope = new DateScope(weekAgo);
         List<Cell> cells = new ArrayList();
         Map<String, Cell> cellMap = new HashMap();
@@ -26,7 +26,7 @@ public class CalendarService {
 
         String startDay = Record.toDay(dateScope.getStartDate());
         String endDay = Record.toDay(dateScope.getEndDate());
-        for (Record record : recordRepository.findByDayBetween(startDay, endDay)) {
+        for (Record record : recordRepository.findBySubjectIdAndDayBetween(subjectId, startDay, endDay)) {
             Cell cell = cellMap.get(record.getDay());
             cell.check(record.getSlot());
         }
@@ -34,14 +34,14 @@ public class CalendarService {
         return cells;
     }
 
-    public boolean toggle(String day, int slot) {
-        Record.RecordKey recordKey = new Record.RecordKey(day, slot);
-        Record record = recordRepository.findOne(recordKey);
+    public boolean toggle(Long subjectId, String day, int slot) {
+        Record.PK PK = new Record.PK(subjectId, day, slot);
+        Record record = recordRepository.findOne(PK);
         if (record == null) {
-            recordRepository.save(new Record(day, slot));
+            recordRepository.save(new Record(subjectId, day, slot));
             return true;
         } else {
-            recordRepository.delete(recordKey);
+            recordRepository.delete(PK);
             return false;
         }
     }

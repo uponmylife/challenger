@@ -10,11 +10,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class ApiController {
     @Autowired
-    private CalendarService tableBuilder;
+    private CalendarService calendarService;
 
-    @RequestMapping("/toggle/{day}/{slot}")
+    @RequestMapping("/toggle")
     @ResponseBody
-    public Boolean toggle(@PathVariable String day, @PathVariable Integer slot) {
-        return tableBuilder.toggle(day, slot);
+    public Boolean toggle(Long subjectId, String day, Integer slot) {
+        return calendarService.toggle(subjectId, day, slot);
     }
 }

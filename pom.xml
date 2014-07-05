@@ -44,5 +44,10 @@
             <version>1.14.2</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>12.0</version>
+        </dependency>
     </dependencies>
 </project>

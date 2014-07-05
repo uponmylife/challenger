@@ -11,8 +11,10 @@ import java.util.Date;
 @Getter
 @ToString
 @Entity
-@IdClass(Record.RecordKey.class)
+@IdClass(Record.PK.class)
 public class Record {
+    @Id
+    private Long subjectId;
     @Id
     private String day;
     @Id
@@ -21,19 +23,22 @@ public class Record {
     public Record() {
     }
 
-    public Record(String day, Integer slot) {
+    public Record(Long subjectId, String day, Integer slot) {
+        this.subjectId = subjectId;
         this.day = day;
         this.slot = slot;
     }
 
-    public static class RecordKey implements Serializable {
+    public static class PK implements Serializable {
+        private Long subjectId;
         private String day;
         private Integer slot;
 
-        public RecordKey() {
+        public PK() {
         }
 
-        public RecordKey(String day, Integer slot) {
+        public PK(Long subjectId, String day, Integer slot) {
+            this.subjectId = subjectId;
             this.day = day;
             this.slot = slot;
         }

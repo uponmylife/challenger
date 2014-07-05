@@ -1,5 +1,11 @@
 #parse("header.vm")
 
+<select id="selectSubject" class="form-control">
+    #foreach($subject in $subjects)
+    <option value="$subject.id" #if($subject.id==$subjectId) selected="selected" #end>$subject.name</option>
+    #end
+</select>
+
 #foreach($cell in $cells)
 <div style="display: inline-block; width: 13%; border: 1px solid">
     #set($dateFormat="d")
@@ -22,8 +28,13 @@ window.onload=function(){
     $('.slot_color_2').css('background-color', getSlotColor(2));
 }
 
+$("#selectSubject").change(function() {
+    location = '/' + $('#selectSubject').val();
+});
+
 function toggle(day, slotNum) {
-    $.post('/toggle/' + day + '/' + slotNum, function(result) {
+    var data = {subjectId: '$subjectId', day: day, slot: slotNum};
+    $.post('/toggle', data, function(result) {
         var slotColor = 'white';
         if (result == true) slotColor = getSlotColor(slotNum);
         $('#' + day + '_' + slotNum).css('background-color', slotColor);
