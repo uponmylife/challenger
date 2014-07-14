@@ -14,7 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @Controller
@@ -34,6 +35,10 @@ public class DefaultController {
     @RequestMapping("/{subjectId}")
     public String index(@PathVariable Long subjectId, Map<String, Object> model) {
         List<Subject> subjects = Lists.newArrayList(subjectRepository.findAll());
+        if (subjects.size() == 0) {
+            model.put("subject", new Subject());
+            return "form";
+        }
         if (subjectId == null) subjectId = subjects.get(0).getId();
         model.put("subjectId", subjectId);
         model.put("subjects", subjects);
