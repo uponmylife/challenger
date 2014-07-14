@@ -12,8 +12,8 @@
     </div>
     #end
     <div class="text-right">
-        <a href="#" class="btn btn-default" onclick="empty()">New</a>
-        <a href="#" class="btn btn-default" onclick="remove()">Delete</a>
+        <a href="#" class="btn btn-default" onclick="emptySubject()">New</a>
+        <a href="#" class="btn btn-default" onclick="deleteSubject()">Delete</a>
         <button type="submit" class="btn btn-default">Save</button>
         <a href="/$!{subjectId}" class="btn btn-default" role="button">Cancel</a>
     </div>
@@ -27,7 +27,7 @@ window.onload=function(){
     $('.form_2').css('background-color', getSlotColor(2));
 }
 
-function empty() {
+function emptySubject() {
     $('#subjectId').val('');
     $('#subjectName').val('');
     $('#goalTitle0').val('');
@@ -38,10 +38,9 @@ function empty() {
     $('#goalCount2').val('');
 }
 
-function remove() {
-    var data = {subjectId: '$subjectId'};
-    $.post('/delete', data, function(result) {
-        location.href='/';
+function deleteSubject() {
+    $.post('/delete', {subjectId: '$subjectId'}, function(result) {
+        location.href = '/';
     });
 }
 </script>

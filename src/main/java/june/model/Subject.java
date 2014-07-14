@@ -1,5 +1,6 @@
 package june.model;
 
+import june.controller.form.SubjectForm;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -25,9 +26,9 @@ public class Subject {
 
     public Subject() {
         goals = new ArrayList();
-        goals.add(new Goal(this, "", 0));
-        goals.add(new Goal(this, "", 0));
-        goals.add(new Goal(this, "", 0));
+        goals.add(new Goal(this, 0, "", 0));
+        goals.add(new Goal(this, 1, "", 0));
+        goals.add(new Goal(this, 2, "", 0));
     }
 
     public Subject(String name, String password) {
@@ -37,7 +38,21 @@ public class Subject {
     }
 
     public void setGoal(Integer slot, String title, Integer count) {
-        goals.get(slot).setTitle(title);
-        goals.get(slot).setCount(count);
+        Goal goal = findBySlot(slot);
+        if (goal == null) return;
+        goal.setTitle(title);
+        goal.setCount(count);
+    }
+
+    private Goal findBySlot(Integer slot) {
+        for (Goal goal : goals) if (goal.getSlot() == slot) return goal;
+        return null;
+    }
+
+    public void setSubjectForm(SubjectForm subjectForm) {
+        name = subjectForm.getSubjectName();
+        setGoal(0, subjectForm.getGoalTitle0(), subjectForm.getGoalCount0());
+        setGoal(1, subjectForm.getGoalTitle1(), subjectForm.getGoalCount1());
+        setGoal(2, subjectForm.getGoalTitle2(), subjectForm.getGoalCount2());
     }
 }

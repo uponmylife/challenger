@@ -24,8 +24,8 @@ public class SubjectRepositoryTest {
     @Before
     public void setUp() throws Exception {
         Subject subject1 = new Subject("작은 성공을 느껴보자", "");
-        subject1.getGoals().set(0, new Goal(subject1, "일찍 자기", 3));
-        subject1.getGoals().set(2, new Goal(subject1, "야식 먹지 않기", 5));
+        subject1.setGoal(0, "일찍 자기", 3);
+        subject1.setGoal(2, "야식 먹지 않기", 5);
         repository.save(subject1);
         Subject subject2 = new Subject("건강한 몸에서 건강한 마음", "");
         repository.save(subject2);

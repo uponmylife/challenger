@@ -20,13 +20,15 @@ public class Goal {
     @Id
     @GeneratedValue
     private Long id;
+    private Integer slot;
     private String title;
     private Integer count;
 
     public Goal() {
     }
 
-    public Goal(Subject subject, String title, Integer count) {
+    public Goal(Subject subject, Integer slot, String title, Integer count) {
+        this.slot = slot;
         this.subject = subject;
         this.title = title;
         this.count = count;

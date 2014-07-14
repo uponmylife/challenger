@@ -27,13 +27,13 @@ public class RecordRepositoryTest {
 
     @Before
     public void setup() throws Exception {
-        repository.save(new Record(1234l, "20140627", 0));
-        repository.save(new Record(1234l, "20140629", 0));
-        repository.save(new Record(1234l, "20140629", 2));
-        repository.save(new Record(1234l, "20140616", 2));
-        repository.save(new Record(4321l, "20140628", 2));
-        repository.save(new Record(4321l, "20140630", 2));
-        repository.save(new Record(4321l, "20140701", 2));
+//        repository.save(new Record(1234l, "20140627", 0));
+//        repository.save(new Record(1234l, "20140629", 0));
+//        repository.save(new Record(1234l, "20140629", 2));
+//        repository.save(new Record(1234l, "20140616", 2));
+//        repository.save(new Record(4321l, "20140628", 2));
+//        repository.save(new Record(4321l, "20140630", 2));
+//        repository.save(new Record(4321l, "20140701", 2));
     }
 
     @Test
@@ -43,6 +43,6 @@ public class RecordRepositoryTest {
 
     @Test
     public void delete() throws Exception {
-        System.out.println(repository.removeBySubjectId(1l));
+        System.out.println(repository.removeBySubjectId(58l));
     }
 }

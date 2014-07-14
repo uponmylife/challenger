@@ -52,18 +52,20 @@ public class DefaultController {
     @RequestMapping(method = RequestMethod.POST, value = "/save")
     public String save(SubjectForm subjectForm, Map<String, Object> model) {
         log.info("save() subjectForm=" + subjectForm);
-        Subject subject = subjectForm.createModel();
+        Subject subject = new Subject();
+        if (subjectForm.getSubjectId() != null) subject = subjectRepository.findOne(subjectForm.getSubjectId());
+        subject.setSubjectForm(subjectForm);
         subjectRepository.save(subject);
         return "redirect:/" + subject.getId();
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/delete")
     @ResponseBody
-    public String delete(Long subjectId) {
+    public Boolean delete(Long subjectId) {
         log.info("delete() subjectId=" + subjectId);
-        subjectRepository.delete(subjectId);
         recordRepository.removeBySubjectId(subjectId);
-        return "redirect:/";
+        subjectRepository.delete(subjectId);
+        return true;
     }
 
     @RequestMapping("/toggle")

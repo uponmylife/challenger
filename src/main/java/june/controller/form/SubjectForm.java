@@ -1,6 +1,5 @@
 package june.controller.form;
 
-import june.model.Subject;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -17,14 +16,4 @@ public class SubjectForm {
     private Integer goalCount1;
     private String goalTitle2;
     private Integer goalCount2;
-
-    public Subject createModel() {
-        Subject subject = new Subject();
-        subject.setId(subjectId);
-        subject.setName(subjectName);
-        subject.setGoal(0, goalTitle0, goalCount0);
-        subject.setGoal(1, goalTitle1, goalCount1);
-        subject.setGoal(2, goalTitle2, goalCount2);
-        return subject;
-    }
 }
