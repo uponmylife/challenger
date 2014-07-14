@@ -16,10 +16,11 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
+@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Runner.class)
 @Transactional
-@TransactionConfiguration(defaultRollback = true)
+@TransactionConfiguration(defaultRollback = false)
 public class RecordRepositoryTest {
     @Autowired
     private RecordRepository repository;
@@ -38,5 +39,10 @@ public class RecordRepositoryTest {
     @Test
     public void select() throws Exception {
         for (Record record : repository.findBySubjectIdAndDayBetween(1234l, "20140628", "20140630")) System.out.println(record);
+    }
+
+    @Test
+    public void delete() throws Exception {
+        System.out.println(repository.removeBySubjectId(1l));
     }
 }

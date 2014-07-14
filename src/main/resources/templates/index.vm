@@ -1,10 +1,20 @@
 #parse("header.vm")
 
-<select id="selectSubject" class="form-control">
-    #foreach($subject in $subjects)
-    <option value="$subject.id" #if($subject.id==$subjectId) selected="selected" #end>$subject.name</option>
-    #end
-</select>
+<table width="100%"><tr>
+    <td width="80%">
+        <select id="selectSubject" class="form-control">
+            #foreach($subject in $subjects)
+                <option value="$subject.id" #if($subject.id==$subjectId) selected="selected" #end>$subject.name</option>
+            #end
+        </select>
+    </td>
+    <td width="10%"></td>
+    <td width="10%">
+        <span onclick="location.href='/$subjectId/form'" class="glyphicon glyphicon-cog" style="font-size: 2.2em"></span>
+    </td>
+</tr></table>
+
+<br>
 
 #foreach($cell in $cells)
 <div style="display: inline-block; width: 13%; border: 1px solid">
@@ -39,13 +49,6 @@ function toggle(day, slotNum) {
         if (result == true) slotColor = getSlotColor(slotNum);
         $('#' + day + '_' + slotNum).css('background-color', slotColor);
     });
-
-}
-
-function getSlotColor(slotNum) {
-    if (slotNum == 0) return 'LemonChiffon';
-    if (slotNum == 1) return 'PowderBlue';
-    if (slotNum == 2) return 'PaleGreen';
 }
 </script>
 

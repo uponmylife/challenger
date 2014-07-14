@@ -1,5 +1,7 @@
 package june.model;
 
+import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.Entity;
@@ -8,7 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.util.Date;
 
-@ToString
+@Getter
+@Setter
+@ToString(exclude = "subject")
 @Entity
 public class Goal {
     @ManyToOne(optional = false)
@@ -16,17 +20,15 @@ public class Goal {
     @Id
     @GeneratedValue
     private Long id;
-    private Integer slot;
     private String title;
-    private Date started;
+    private Integer count;
 
     public Goal() {
     }
 
-    public Goal(Integer slot, Subject subject, String title) {
-        this.slot = slot;
+    public Goal(Subject subject, String title, Integer count) {
         this.subject = subject;
         this.title = title;
-        started = new Date();
+        this.count = count;
     }
 }

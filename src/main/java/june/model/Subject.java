@@ -1,6 +1,7 @@
 package june.model;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@Setter
 @ToString
 @Entity
 public class Subject {
@@ -23,14 +25,19 @@ public class Subject {
 
     public Subject() {
         goals = new ArrayList();
-        goals.add(new Goal(0, this, ""));
-        goals.add(new Goal(1, this, ""));
-        goals.add(new Goal(2, this, ""));
+        goals.add(new Goal(this, "", 0));
+        goals.add(new Goal(this, "", 0));
+        goals.add(new Goal(this, "", 0));
     }
 
     public Subject(String name, String password) {
         this();
         this.name = name;
         this.password = password;
+    }
+
+    public void setGoal(Integer slot, String title, Integer count) {
+        goals.get(slot).setTitle(title);
+        goals.get(slot).setCount(count);
     }
 }
