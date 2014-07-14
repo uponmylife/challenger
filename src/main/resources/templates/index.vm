@@ -13,20 +13,25 @@
         <span onclick="location.href='/$subjectId/form'" class="glyphicon glyphicon-cog" style="font-size: 2.2em"></span>
     </td>
 </tr></table>
-
 <br>
 
+#set($weekAgo = $weekAgo + 2)
+<a href="/$subjectId?weekAgo=$weekAgo" class="btn btn-default btn-sm btn-block">View previous weeks</a>
+
+#set($cellHeight = 10)
 #foreach($cell in $cells)
 <div style="display: inline-block; width: 13%; border: 1px solid">
     #set($dateFormat="d")
-    #if($foreach.index%7 == 0) #set($dateFormat="M / d")
+    #if($foreach.index%7 == 0)
+        #set($dateFormat="M / d")
+        #if($cells.size()-$foreach.index<=7) #set($cellHeight = 30) #end
     #end
     <div>$datetool.format($dateFormat, $cell.date)</div>
     #foreach($slot in $cell.slots)
         #set($i=$foreach.index)
         <div id="${cell.day}_$i" onclick="toggle('${cell.day}', '$i')"
              class="text-right #if($slot) slot_color_$i #end"
-             style="height: 30px"></div>
+             style="height: ${cellHeight}px"></div>
     #end
 </div>
 #end

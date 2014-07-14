@@ -29,20 +29,22 @@ public class DefaultController {
 
     @RequestMapping("/")
     public String index(Map<String, Object> model) {
-        return index(null, model);
+        return index(null, null, model);
     }
 
     @RequestMapping("/{subjectId}")
-    public String index(@PathVariable Long subjectId, Map<String, Object> model) {
+    public String index(@PathVariable Long subjectId, Integer weekAgo, Map<String, Object> model) {
         List<Subject> subjects = Lists.newArrayList(subjectRepository.findAll());
         if (subjects.size() == 0) {
             model.put("subject", new Subject());
             return "form";
         }
+        if (weekAgo == null) weekAgo = 1;
         if (subjectId == null) subjectId = subjects.get(0).getId();
+        model.put("weekAgo", weekAgo);
         model.put("subjectId", subjectId);
         model.put("subjects", subjects);
-        model.put("cells", calendarService.show(subjectId, 1));
+        model.put("cells", calendarService.show(subjectId, weekAgo));
         return "index";
     }
 
