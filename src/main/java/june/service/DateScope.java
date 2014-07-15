@@ -1,4 +1,4 @@
-package june.model;
+package june.service;
 
 import lombok.Getter;
 import lombok.ToString;

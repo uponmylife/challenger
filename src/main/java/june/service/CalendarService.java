@@ -1,7 +1,6 @@
 package june.service;
 
 import june.model.Cell;
-import june.model.DateScope;
 import june.model.Record;
 import june.repository.RecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;

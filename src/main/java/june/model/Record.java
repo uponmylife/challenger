@@ -2,10 +2,11 @@ package june.model;
 
 import lombok.Getter;
 import lombok.ToString;
-import org.apache.commons.lang.time.FastDateFormat;
+import org.apache.commons.lang3.time.FastDateFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.ParseException;
 import java.util.Date;
 
 @Getter
@@ -44,7 +45,17 @@ public class Record {
         }
     }
 
+    public static final String DAY_FORMAT = "yyyyMMdd";
+
     public static String toDay(Date date) {
-        return FastDateFormat.getInstance("yyyyMMdd").format(date);
+        return FastDateFormat.getInstance(DAY_FORMAT).format(date);
+    }
+
+    public static Date fromDay(String day) {
+        try {
+            return FastDateFormat.getInstance(DAY_FORMAT).parse(day);
+        } catch (ParseException e) {
+            throw new RuntimeException(e.toString());
+        }
     }
 }
