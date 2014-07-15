@@ -5,30 +5,47 @@ import june.model.Record;
 import java.util.*;
 
 public class Analyzer {
-    private Map<String, Integer> weekMap;
+    private int goalCount;
+    private Date today;
+    private Map<String, Integer> weekMap = new LinkedHashMap<String, Integer>();
 
-    public Analyzer() {
+    public Analyzer(int goalCount, List<String> days) {
+        this(goalCount, days, new Date());
     }
 
-    public Analyzer(List<String> days) {
-        Map<String, Integer> map = getWeekMap(days);
-        weekMap = updateCount(map, days);
+    public Analyzer(int goalCount, List<String> days, Date today) {
+        this.today = today;
+        this.goalCount = goalCount;
+        makeWeekMap(days);
+        applyRecord(days);
     }
 
-    public Integer elapsedWeeks() {
+    public int elapsedWeeks() {
+        return weekMap.size();
+    }
+
+    public int achievedWeeks() {
+        int achieves = 0;
+        for (Integer count : weekMap.values()) if (count >= goalCount) achieves++;
+        return achieves;
+    }
+
+    public int recentContinuousDays() {
         return 0;
     }
 
-    public Integer achievedWeeks() {
-        return 0;
-    }
-
-    public Integer recentContinuousDays() {
-        return 0;
-    }
-
-    public Integer maxContinuousDays() {
-        return 0;
+    public int maxContinuousDays() {
+        int continuousWeeks = 0;
+        int maxContinuousWeeks = 0;
+        for (Integer count : weekMap.values()) {
+            if (count >= goalCount) {
+                continuousWeeks++;
+                if (continuousWeeks > maxContinuousWeeks) maxContinuousWeeks = continuousWeeks;
+            } else {
+                continuousWeeks = 0;
+            }
+        }
+        return maxContinuousWeeks * 7;
     }
 
     String getFirstDayOfWeek(String day) {
@@ -37,24 +54,24 @@ public class Analyzer {
         return Record.toDay(cal.getTime());
     }
 
-    Map<String, Integer> getWeekMap(List<String> days) {
-        Map<String, Integer> map = new HashMap<String, Integer>();
+    private void makeWeekMap(List<String> days) {
         Date firstDate = Record.fromDay(days.get(0));
-        Date lastDate = Record.fromDay(days.get(days.size() - 1));
         Calendar cal = getFirstCalendarOfWeek(firstDate);
-        while (cal.getTimeInMillis() <= lastDate.getTime()) {
-            map.put(Record.toDay(cal.getTime()), 0);
+        while (cal.getTimeInMillis() <= today.getTime()) {
+            weekMap.put(Record.toDay(cal.getTime()), 0);
             cal.add(Calendar.DAY_OF_YEAR, 7);
         }
-        return map;
     }
 
-    Map<String, Integer> updateCount(Map<String, Integer> map, List<String> days) {
+    private void applyRecord(List<String> days) {
         for (String day : days) {
             String key = getFirstDayOfWeek(day);
-            map.put(key, map.get(key) + 1);
+            weekMap.put(key, weekMap.get(key) + 1);
         }
-        return map;
+    }
+
+    Map<String, Integer> getWeekMap() {
+        return weekMap;
     }
 
     private Calendar getFirstCalendarOfWeek(Date date) {

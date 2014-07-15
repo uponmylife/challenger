@@ -1,24 +1,27 @@
 package june.service;
 
+import june.model.Record;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class AnalyzerTest {
+    List<String> days = Arrays.asList("20140701", "20140706", "20140707", "20140708", "20140711", "20140731", "20140801");
+    Analyzer analyzer = new Analyzer(2, days, Record.fromDay("20140802"));
 
     @Test
     public void testElapsedWeeks() throws Exception {
-
+        assertEquals(5, analyzer.elapsedWeeks());
     }
 
     @Test
     public void testAchievedWeeks() throws Exception {
-
+        assertEquals(3, analyzer.achievedWeeks());
     }
 
     @Test
@@ -28,18 +31,17 @@ public class AnalyzerTest {
 
     @Test
     public void testMaxContinuousDays() throws Exception {
-
+        assertEquals(14, analyzer.maxContinuousDays());
     }
 
     @Test
     public void testGetFirstDayOfWeek() throws Exception {
-        assertEquals("20140714", new Analyzer().getFirstDayOfWeek("20140717"));
+        assertEquals("20140714", analyzer.getFirstDayOfWeek("20140717"));
     }
 
     @Test
     public void testGetWeekMap() throws Exception {
-        List<String> days = Arrays.asList("20140701", "20140707", "20140708", "20140711", "20140801");
-        Map<String, Integer> weekMap = new Analyzer().getWeekMap(days);
+        Map<String, Integer> weekMap = analyzer.getWeekMap();
         assertEquals(5, weekMap.size());
         assertTrue(weekMap.containsKey("20140630"));
         assertTrue(weekMap.containsKey("20140707"));
@@ -50,13 +52,11 @@ public class AnalyzerTest {
 
     @Test
     public void testUpdateCount() throws Exception {
-        List<String> days = Arrays.asList("20140701", "20140707", "20140708", "20140711", "20140801");
-        Map<String, Integer> weekMap = new Analyzer().getWeekMap(days);
-        new Analyzer().updateCount(weekMap, days);
-        assertEquals(new Integer(1), weekMap.get("20140630"));
+        Map<String, Integer> weekMap = analyzer.getWeekMap();
+        assertEquals(new Integer(2), weekMap.get("20140630"));
         assertEquals(new Integer(3), weekMap.get("20140707"));
         assertEquals(new Integer(0), weekMap.get("20140714"));
         assertEquals(new Integer(0), weekMap.get("20140721"));
-        assertEquals(new Integer(1), weekMap.get("20140728"));
+        assertEquals(new Integer(2), weekMap.get("20140728"));
     }
 }
