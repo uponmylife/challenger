@@ -25,10 +25,15 @@ public class AnalyzerTest {
     @Test
     public void testRecentContinuousDays() throws Exception {
         assertEquals(5, analyzer.recentContinuousDays());
-        Analyzer analyzer1 = new Analyzer(3, days, Record.fromDay("20140801"));
-        assertEquals(0, analyzer1.recentContinuousDays());
+        Analyzer analyzer1 = new Analyzer(5, days, Record.fromDay("20140801"));
+        assertEquals(5, analyzer1.recentContinuousDays());
         Analyzer analyzer2 = new Analyzer(2, days, Record.fromDay("20140804"));
-        assertEquals(1, analyzer2.recentContinuousDays());
+        assertEquals(8, analyzer2.recentContinuousDays());
+        List<String> days1 = new ArrayList<String>(days);
+        days1.add("20140804");
+        days1.add("20140805");
+        Analyzer analyzer3 = new Analyzer(2, days1, Record.fromDay("20140812"));
+        assertEquals(16, analyzer3.recentContinuousDays());
     }
 
     @Test
