@@ -3,16 +3,14 @@ package june.service;
 import june.model.Record;
 import org.junit.Test;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class AnalyzerTest {
-    List<String> days = Arrays.asList("20140701", "20140706", "20140707", "20140708", "20140711", "20140731", "20140801");
-    Analyzer analyzer = new Analyzer(2, days, Record.fromDay("20140802"));
+    List<String> days = Arrays.asList("20140701", "20140706", "20140707", "20140708", "20140711", "20140730", "20140731");
+    Analyzer analyzer = new Analyzer(2, days, Record.fromDay("20140801"));
 
     @Test
     public void testElapsedWeeks() throws Exception {
@@ -26,7 +24,11 @@ public class AnalyzerTest {
 
     @Test
     public void testRecentContinuousDays() throws Exception {
-
+        assertEquals(5, analyzer.recentContinuousDays());
+        Analyzer analyzer1 = new Analyzer(3, days, Record.fromDay("20140801"));
+        assertEquals(0, analyzer1.recentContinuousDays());
+        Analyzer analyzer2 = new Analyzer(2, days, Record.fromDay("20140804"));
+        assertEquals(1, analyzer2.recentContinuousDays());
     }
 
     @Test
@@ -37,6 +39,13 @@ public class AnalyzerTest {
     @Test
     public void testGetFirstDayOfWeek() throws Exception {
         assertEquals("20140714", analyzer.getFirstDayOfWeek("20140717"));
+    }
+
+    @Test
+    public void testGetDaysInThisWeek() throws Exception {
+        assertEquals(1, analyzer.getDaysInWeek(Record.fromDay("20140707")));
+        assertEquals(3, analyzer.getDaysInWeek(Record.fromDay("20140709")));
+        assertEquals(7, analyzer.getDaysInWeek(Record.fromDay("20140713")));
     }
 
     @Test

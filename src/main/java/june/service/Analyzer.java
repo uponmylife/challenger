@@ -9,7 +9,6 @@ public class Analyzer {
     private Date today;
     private Map<String, Integer> weekMap = new LinkedHashMap<String, Integer>();
 
-    
 
     public Analyzer(int goalCount, List<String> days) {
         this(goalCount, days, new Date());
@@ -33,6 +32,16 @@ public class Analyzer {
     }
 
     public int recentContinuousDays() {
+        int continuousWeeks = 0;
+        List<Integer> list = new ArrayList<Integer>(weekMap.values());
+        for (int i=list.size()-1; i>=0; i--) {
+            // todo: 이번주이고 아직 가능성이 있다면 성공으로 본다.
+            if (list.get(i) < goalCount) break;
+            continuousWeeks++;
+        }
+
+        if (continuousWeeks > 0) return (continuousWeeks - 1) * 7 + getDaysInWeek(today);
+
         return 0;
     }
 
@@ -54,6 +63,13 @@ public class Analyzer {
         Date date = Record.fromDay(day);
         Calendar cal = getFirstCalendarOfWeek(date);
         return Record.toDay(cal.getTime());
+    }
+
+    int getDaysInWeek(Date date) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int days = cal.get(Calendar.DAY_OF_WEEK) - 1;
+        return days == 0 ? 7 : days;
     }
 
     private void makeWeekMap(List<String> days) {
