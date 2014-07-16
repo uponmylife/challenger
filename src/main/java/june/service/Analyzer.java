@@ -9,7 +9,6 @@ public class Analyzer {
     private Date today;
     private Map<String, Integer> weekMap = new LinkedHashMap<String, Integer>();
 
-
     public Analyzer(int goalCount, List<String> days) {
         this(goalCount, days, new Date());
     }
@@ -84,6 +83,7 @@ public class Analyzer {
     }
 
     private void makeWeekMap(List<String> days) {
+        if (days.size() == 0) return;
         Date firstDate = Record.fromDay(days.get(0));
         Calendar cal = getFirstCalendarOfWeek(firstDate);
         while (cal.getTimeInMillis() <= today.getTime()) {

@@ -6,6 +6,7 @@ import june.model.Subject;
 import june.repository.RecordRepository;
 import june.repository.SubjectRepository;
 import june.service.CalendarService;
+import june.service.ReportService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,8 @@ public class DefaultController {
     private SubjectRepository subjectRepository;
     @Autowired
     private RecordRepository recordRepository;
+    @Autowired
+    private ReportService reportService;
 
     @RequestMapping("/")
     public String index(Map<String, Object> model) {
@@ -41,9 +44,14 @@ public class DefaultController {
         }
         if (weekAgo == null) weekAgo = 1;
         if (subjectId == null) subjectId = subjects.get(0).getId();
+
+        Subject subject = subjectRepository.findOne(subjectId);
+        reportService.analyze(subject);
+
         model.put("weekAgo", weekAgo);
         model.put("subjectId", subjectId);
         model.put("subjects", subjects);
+        model.put("subject", subject);
         model.put("cells", calendarService.show(subjectId, weekAgo));
         return "index";
     }

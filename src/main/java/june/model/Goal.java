@@ -1,13 +1,11 @@
 package june.model;
 
+import june.service.Analyzer;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 
 @Getter
@@ -23,6 +21,8 @@ public class Goal {
     private Integer slot;
     private String title;
     private Integer count;
+    @Transient
+    private Analyzer analyzer;
 
     public Goal() {
     }
