@@ -43,9 +43,9 @@
 <table class="table">
     <tr>
         <th>Goal</th>
-        <th>Achieved week</th>
-        <th>Max days</th>
-        <th>Recent days</th>
+        <th>Success<br>weeks</th>
+        <th>Max<br>days</th>
+        <th>Recent<br>days</th>
     </tr>
     #foreach($goal in $subject.goals)
     <tr class="slot_color_$foreach.index">
