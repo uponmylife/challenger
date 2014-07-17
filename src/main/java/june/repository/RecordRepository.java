@@ -7,6 +7,6 @@ import java.util.List;
 
 public interface RecordRepository extends CrudRepository<Record, Record.PK> {
     List<Record> findBySubjectIdAndDayBetween(Long subjectId, String start, String end);
-    List<Record> findBySubjectIdAndSlot(Long subjectId, Integer slot);
+    List<Record> findBySubjectIdAndSlotOrderByDayAsc(Long subjectId, Integer slot);
     Long removeBySubjectId(Long subjectId);
 }

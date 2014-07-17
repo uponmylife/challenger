@@ -37,21 +37,21 @@ public class DefaultController {
 
     @RequestMapping("/{subjectId}")
     public String index(@PathVariable Long subjectId, Integer weekAgo, Map<String, Object> model) {
-        List<Subject> subjects = Lists.newArrayList(subjectRepository.findAll());
-        if (subjects.size() == 0) {
+        List<Subject> selectableSubjects = Lists.newArrayList(subjectRepository.findAll());
+        if (selectableSubjects.size() == 0) {
             model.put("subject", new Subject());
             return "form";
         }
         if (weekAgo == null) weekAgo = 1;
-        if (subjectId == null) subjectId = subjects.get(0).getId();
+        if (subjectId == null) subjectId = selectableSubjects.get(0).getId();
 
         Subject subject = subjectRepository.findOne(subjectId);
+
         reportService.analyze(subject);
 
         model.put("weekAgo", weekAgo);
-        model.put("subjectId", subjectId);
-        model.put("subjects", subjects);
         model.put("subject", subject);
+        model.put("selectableSubjects", selectableSubjects);
         model.put("cells", calendarService.show(subjectId, weekAgo));
         return "index";
     }

@@ -3,20 +3,22 @@
 <table width="100%"><tr>
     <td width="80%">
         <select id="selectSubject" class="form-control">
-            #foreach($subject in $subjects)
-                <option value="$subject.id" #if($subject.id==$subjectId) selected="selected" #end>$subject.name</option>
+            #foreach($selectableSubject in $selectableSubjects)
+                <option value="$selectableSubject.id" #if($selectableSubject.id==$subject.id) selected="selected" #end>
+                    $selectableSubject.name
+                </option>
             #end
         </select>
     </td>
     <td width="10%"></td>
     <td width="10%">
-        <span onclick="location.href='/$subjectId/form'" class="glyphicon glyphicon-cog" style="font-size: 2.2em"></span>
+        <span onclick="location.href='/$subject.id/form'" class="glyphicon glyphicon-cog" style="font-size: 2.2em"></span>
     </td>
 </tr></table>
 <br>
 
 #set($weekAgo = $weekAgo + 2)
-<a href="/$subjectId?weekAgo=$weekAgo" class="btn btn-default btn-sm btn-block">View previous weeks</a>
+<a href="/$subject.id?weekAgo=$weekAgo" class="btn btn-default btn-sm btn-block">View previous weeks</a>
 
 #set($cellHeight = 10)
 #foreach($cell in $cells)
@@ -48,7 +50,7 @@ $("#selectSubject").change(function() {
 });
 
 function toggle(day, slotNum) {
-    var data = {subjectId: '$subjectId', day: day, slot: slotNum};
+    var data = {subjectId: '$subject.id', day: day, slot: slotNum};
     $.post('/toggle', data, function(result) {
         var slotColor = 'white';
         if (result == true) slotColor = getSlotColor(slotNum);
