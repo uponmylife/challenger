@@ -50,7 +50,7 @@
     #foreach($goal in $subject.goals)
     <tr class="slot_color_$foreach.index">
         #set($analyzer=$goal.analyzer)
-        <td>$goal.title</td>
+        <td>$goal.count $goal.title</td>
         <td>$analyzer.achievedWeeks() / $analyzer.elapsedWeeks()</td>
         <td>$analyzer.maxContinuousDays()</td>
         <td>$analyzer.recentContinuousDays()</td>

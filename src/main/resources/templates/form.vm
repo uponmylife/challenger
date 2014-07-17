@@ -1,16 +1,27 @@
 #parse("header.vm")
 
 <form method="POST" action="/save" class="form-control">
-    <input name="subjectId" id="subjectId" type="text" class="form-control" value="$!subjectId" readonly>
+    <input name="subjectId" id="subjectId" type="hidden" class="form-control" value="$!subjectId" readonly>
+    SUBJECT:
     <input id="subjectName" name="subjectName" type="text" class="form-control" value="$!subject.name">
-    #foreach($goal in $subject.goals)
-    <div class="form_$foreach.index" style="width: 400px; padding:7px; margin:7px">
-        <input id="goalTitle$foreach.index" name="goalTitle$foreach.index" type="text" size="20" value="$!goal.title">
-        more than
-        <input id="goalCount$foreach.index" name="goalCount$foreach.index" type="number" size="1" value="$!goal.count">
-        times a week
-    </div>
-    #end
+    <br>
+    GOAL:
+    <table class="table">
+        <tr>
+            <th>Title</th>
+            <th>Count</th>
+        </tr>
+        #foreach($goal in $subject.goals)
+        <tr class="form_$foreach.index">
+            <td width="85%">
+                <input id="goalTitle$foreach.index" name="goalTitle$foreach.index" type="text" value="$!goal.title" class="form-control">
+            </td>
+            <td width="15%">
+                <input id="goalCount$foreach.index" name="goalCount$foreach.index" type="number"  value="$!goal.count" class="form-control">
+            </td>
+        </tr>
+        #end
+    </table>
     <div class="text-right">
         <a href="#" class="btn btn-default" onclick="emptySubject()">New</a>
         <a href="#" class="btn btn-default" onclick="deleteSubject()">Delete</a>
@@ -21,28 +32,28 @@
 
 
 <script type="text/javascript">
-window.onload=function(){
-    $('.form_0').css('background-color', getSlotColor(0));
-    $('.form_1').css('background-color', getSlotColor(1));
-    $('.form_2').css('background-color', getSlotColor(2));
-}
+    window.onload = function () {
+        $('.form_0').css('background-color', getSlotColor(0));
+        $('.form_1').css('background-color', getSlotColor(1));
+        $('.form_2').css('background-color', getSlotColor(2));
+    }
 
-function emptySubject() {
-    $('#subjectId').val('');
-    $('#subjectName').val('');
-    $('#goalTitle0').val('');
-    $('#goalCount0').val('');
-    $('#goalTitle1').val('');
-    $('#goalCount1').val('');
-    $('#goalTitle2').val('');
-    $('#goalCount2').val('');
-}
+    function emptySubject() {
+        $('#subjectId').val('');
+        $('#subjectName').val('');
+        $('#goalTitle0').val('');
+        $('#goalCount0').val('');
+        $('#goalTitle1').val('');
+        $('#goalCount1').val('');
+        $('#goalTitle2').val('');
+        $('#goalCount2').val('');
+    }
 
-function deleteSubject() {
-    $.post('/delete', {subjectId: '$subjectId'}, function(result) {
-        location.href = '/';
-    });
-}
+    function deleteSubject() {
+        $.post('/delete', {subjectId: '$subjectId'}, function (result) {
+            location.href = '/';
+        });
+    }
 </script>
 
 #parse("footer.vm")

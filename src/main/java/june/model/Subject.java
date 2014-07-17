@@ -26,9 +26,9 @@ public class Subject {
 
     public Subject() {
         goals = new ArrayList();
-        goals.add(new Goal(this, 0, "", 0));
-        goals.add(new Goal(this, 1, "", 0));
-        goals.add(new Goal(this, 2, "", 0));
+        goals.add(new Goal(this, 0, "", 7));
+        goals.add(new Goal(this, 1, "", 7));
+        goals.add(new Goal(this, 2, "", 7));
     }
 
     public Subject(String name, String password) {
@@ -41,6 +41,7 @@ public class Subject {
         Goal goal = findBySlot(slot);
         if (goal == null) return;
         goal.setTitle(title);
+        if (count == null || count < 1 || count > 7) count = 7;
         goal.setCount(count);
     }
 

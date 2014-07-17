@@ -20,7 +20,8 @@ public class ReportService {
         for (int i=0; i<3; i++) {
             List<Record> records = recordRepository.findBySubjectIdAndSlotOrderByDayAsc(subject.getId(), i);
             Goal goal = subject.getGoals().get(i);
-            goal.setAnalyzer(new AnalyzerImpl(subject.getGoals().get(i).getCount(), makeDayList(records)));
+            AnalyzerImpl analyzer = new AnalyzerImpl(goal.getCount(), makeDayList(records));
+            goal.setAnalyzer(analyzer);
         }
     }
 
