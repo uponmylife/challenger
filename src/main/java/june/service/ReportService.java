@@ -4,6 +4,7 @@ import june.model.Goal;
 import june.model.Record;
 import june.model.Subject;
 import june.repository.RecordRepository;
+import june.service.impl.AnalyzerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class ReportService {
         for (int i=0; i<3; i++) {
             List<Record> records = recordRepository.findBySubjectIdAndSlotOrderByDayAsc(subject.getId(), i);
             Goal goal = subject.getGoals().get(i);
-            goal.setAnalyzer(new Analyzer(subject.getGoals().get(i).getCount(), makeDayList(records)));
+            goal.setAnalyzer(new AnalyzerImpl(subject.getGoals().get(i).getCount(), makeDayList(records)));
         }
     }
 

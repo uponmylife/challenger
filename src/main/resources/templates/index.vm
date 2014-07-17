@@ -38,6 +38,26 @@
 </div>
 #end
 
+<br>
+
+<table class="table">
+    <tr>
+        <th>Goal</th>
+        <th>Achieved week</th>
+        <th>Max days</th>
+        <th>Recent days</th>
+    </tr>
+    #foreach($goal in $subject.goals)
+    <tr class="slot_color_$foreach.index">
+        #set($analyzer=$goal.analyzer)
+        <td>$goal.title</td>
+        <td>$analyzer.achievedWeeks() / $analyzer.elapsedWeeks()</td>
+        <td>$analyzer.maxContinuousDays()</td>
+        <td>$analyzer.recentContinuousDays()</td>
+    </tr>
+    #end
+</table>
+
 <script type="text/javascript">
 window.onload=function(){
     $('.slot_color_0').css('background-color', getSlotColor(0));

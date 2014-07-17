@@ -1,6 +1,8 @@
-package june.service;
+package june.service.impl;
 
 import june.model.Record;
+import june.service.Analyzer;
+import june.service.impl.AnalyzerImpl;
 import org.junit.Test;
 
 import java.util.*;
@@ -10,7 +12,7 @@ import static org.junit.Assert.assertTrue;
 
 public class AnalyzerTest {
     List<String> days = Arrays.asList("20140701", "20140706", "20140707", "20140708", "20140711", "20140730", "20140731");
-    Analyzer analyzer = new Analyzer(2, days, Record.fromDay("20140801"));
+    AnalyzerImpl analyzer = new AnalyzerImpl(2, days, Record.fromDay("20140801"));
 
     @Test
     public void testElapsedWeeks() throws Exception {
@@ -25,14 +27,14 @@ public class AnalyzerTest {
     @Test
     public void testRecentContinuousDays() throws Exception {
         assertEquals(5, analyzer.recentContinuousDays());
-        Analyzer analyzer1 = new Analyzer(5, days, Record.fromDay("20140801"));
+        Analyzer analyzer1 = new AnalyzerImpl(5, days, Record.fromDay("20140801"));
         assertEquals(5, analyzer1.recentContinuousDays());
-        Analyzer analyzer2 = new Analyzer(2, days, Record.fromDay("20140804"));
+        Analyzer analyzer2 = new AnalyzerImpl(2, days, Record.fromDay("20140804"));
         assertEquals(8, analyzer2.recentContinuousDays());
         List<String> days1 = new ArrayList<String>(days);
         days1.add("20140804");
         days1.add("20140805");
-        Analyzer analyzer3 = new Analyzer(2, days1, Record.fromDay("20140812"));
+        Analyzer analyzer3 = new AnalyzerImpl(2, days1, Record.fromDay("20140812"));
         assertEquals(16, analyzer3.recentContinuousDays());
     }
 
